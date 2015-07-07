@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/coverView" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Song"
+                android:gravity="center"
+                android:id="@+id/songView" />
+
+            <TextView
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Artist"
+                android:gravity="center"
+                android:id="@+id/artistView" />
+
+            <TextView
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Album"
+                android:gravity="center"
+                android:id="@+id/albumView" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
