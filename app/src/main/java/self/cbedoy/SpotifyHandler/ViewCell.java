@@ -17,6 +17,9 @@ import java.util.HashMap;
 public class ViewCell extends AbstractAdapter {
 
 
+    private int backgroundColor;
+    private int detailColor;
+
     public ViewCell(ArrayList<HashMap<String, Object>> dataModel) {
         super(dataModel);
     }
@@ -39,7 +42,23 @@ public class ViewCell extends AbstractAdapter {
         HashMap<String, Object> information = dataModel.get(position);
         viewHolder.textView.setText(information.get("value").toString());
 
+        viewHolder.textView.setBackgroundColor(backgroundColor);
+        viewHolder.textView.setTextColor(detailColor);
+
         return convertView;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setDetailColor(int detailColor) {
+
+        this.detailColor = detailColor;
     }
 
     private class ViewHolder{
