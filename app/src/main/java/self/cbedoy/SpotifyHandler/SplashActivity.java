@@ -3,6 +3,7 @@ package self.cbedoy.SpotifyHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * Created by Carlos Bedoy on 7/7/15.
@@ -11,7 +12,7 @@ import android.os.Bundle;
  * <p/>
  * Pademobile
  */
-public class SplashActivity extends Activity
+public class SplashActivity extends ActionBarActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,14 +2,21 @@ package self.cbedoy.SpotifyHandler;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -31,7 +38,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
 
     private ParallaxListView parallaxListView;
@@ -54,6 +61,10 @@ public class MainActivity extends Activity {
 
         parallaxListView = (ParallaxListView) findViewById(R.id.parallaxListview);
 
+        parallaxListView.setDividerHeight(2);
+        parallaxListView.setDivider(new ColorDrawable(Color.parseColor("#20000000")));
+        parallaxListView.invalidate();
+
         parallaxViewHeader = getLayoutInflater().inflate(R.layout.header_view, parallaxListView, false);
 
         imageView = (ImageView) parallaxViewHeader.findViewById(R.id.imageView);
@@ -69,13 +80,45 @@ public class MainActivity extends Activity {
 
         parallaxListView.setAdapter(viewCell);
 
-
-        ApplicationLoader.mMainHandler.postDelayed(new Runnable() {
+        parallaxListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void run() {
-                search();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HashMap<String, Object> information = dataModel.get(i);
+
+
+                String preview_url = (String) information.get("preview_url");
+                String uri = (String) information.get("uri");
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ApplicationLoader.isSpotifyInstalled(false) ? uri : preview_url)));
             }
-        }, 600);
+        });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("Thanks for use your application, if you like it you can give us to buy a beer or to retrieve energy.\n" +
+                                "\n" +
+                                "\n" +
+                                "\n" +
+                                "Self Coder")
+                        .setPositiveButton("Sure!!!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).create();
+
+                alertDialog.show();
+            }
+        });
+
+        search();
 
         viewCell.notifyDataSetChanged();
     }
@@ -152,6 +195,11 @@ public class MainActivity extends Activity {
                         floatingActionButton.setColorNormal(detailColor);
                         floatingActionButton.setColorPressed(primaryColor);
                         floatingActionButton.setColorRipple(secondaryColor);
+
+
+                        Window window = getWindow();
+                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                        window.setStatusBarColor(detailColor);
 
                         viewCell.notifyDataSetChanged();
                     }
