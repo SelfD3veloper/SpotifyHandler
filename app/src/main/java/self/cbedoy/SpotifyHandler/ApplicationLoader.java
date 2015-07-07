@@ -2,9 +2,12 @@ package self.cbedoy.SpotifyHandler;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.view.LayoutInflater;
 
+
+import java.util.List;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 
@@ -41,5 +44,20 @@ public class ApplicationLoader extends Application
         // If you know you'll only use the ones that don't require authorisation you can skip this step
         //mSpotifyApi.setAccessToken()
 
+    }
+
+
+    public static boolean isSpotifyInstalled(boolean getSysPackages) {
+        List<PackageInfo> packs = mContext.getPackageManager().getInstalledPackages(0);
+        for(int i=0;i<packs.size();i++) {
+            PackageInfo p = packs.get(i);
+            if ((!getSysPackages) && (p.versionName == null)) {
+                continue ;
+            }
+            if(p.packageName.contains("spotify")){
+                return true;
+            }
+        }
+        return false;
     }
 }
